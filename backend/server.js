@@ -1,8 +1,9 @@
 const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const connectDB = require("./config/db");
-
+const authRoutes = require("./routes/authRoutes");
 dotenv.config(); // Load .env variables
 
 const app = express();
@@ -10,7 +11,7 @@ const app = express();
 // Middleware to handle cors
 app.use(
   cors({
-    origin: process.env.Client_URL,
+    origin: process.env.Client_URL || "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -23,9 +24,7 @@ connectDB();
 app.use(express.json());
 
 // Routes
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+app.use("/api/auth",authRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
