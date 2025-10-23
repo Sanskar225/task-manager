@@ -1,0 +1,14 @@
+const express = require("express");
+const {protect,adminonly} = require("../middleware/authMiddleware");
+const {  getUserDashboardData, getDashboardData, getTasks, getTaskById, updateTask, createTask, deleteTask, updateTaskStatus, updateTaskChecklist } = require("../controllers/taskController");
+const router = express.Router();
+router.get("/dashboard-data",protect,getDashboardData);
+router.get("/user-dashboard-data",protect,getUserDashboardData);
+router.get("/",protect,getTasks);
+router.get("/:id",protect,getTaskById);
+router.put("/:id",protect,updateTask);
+router.post("/",protect,adminonly,createTask);
+router.delete("/:id",protect,adminonly,deleteTask);
+router.put("/:id/status",protect,updateTaskStatus);
+router.put("/:id/todo",protect,updateTaskChecklist);
+module.exports=router;
