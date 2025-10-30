@@ -17,7 +17,6 @@ export const API_PATHS = {
   UPDATE_USER_STATUS: (id) => `/users/${id}/status`,
   
   // Reports
-  TASK_REPORTS: '/reports/tasks',
-  USER_REPORTS: '/reports/users',
-  PERFORMANCE_REPORTS: '/reports/performance'
+  EXPORT_TASKS_REPORT: '/reports/export/tasks',
+  EXPORT_USERS_REPORT: '/reports/export/users'
 };
