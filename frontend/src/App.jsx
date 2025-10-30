@@ -12,6 +12,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import ManageTasks from "./pages/Admin/ManageTasks";
 import CreateTask from "./pages/Admin/CreateTask";
 import ManageUser from "./pages/Admin/ManageUser";
+import Reports from "./pages/Admin/Reports";
 import UserDashboard from "./pages/User/UserDashboard";
 import MyTask from "./pages/User/MyTask";
 import ViewTaskDetails from "./pages/User/ViewTaskDetails";
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/admin/tasks" element={<ManageTasks />} />
           <Route path="/admin/create-task" element={<CreateTask />} />
           <Route path="/admin/users" element={<ManageUser />} />
+          <Route path="/admin/reports" element={<Reports />} />
         </Route>
 
         {/* User routes */}

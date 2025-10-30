@@ -1,19 +1,19 @@
-import React from 'react';
-import { Card, Row, Col, Statistic } from 'antd';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Card, Row, Col, Statistic } from "antd";
+import { Link } from "react-router-dom";
 import {
   UserOutlined,
   ProjectOutlined,
   FileExcelOutlined,
   CheckCircleOutlined,
-  ClockCircleOutlined
-} from '@ant-design/icons';
+  ClockCircleOutlined,
+} from "@ant-design/icons";
 
 const AdminDashboard = () => {
   return (
-    <div className="admin-dashboard" style={{ padding: '24px' }}>
-      <h1 style={{ marginBottom: '24px' }}>Admin Dashboard</h1>
-      
+    <div className="admin-dashboard" style={{ padding: "24px" }}>
+      <h1 style={{ marginBottom: "24px" }}>Admin Dashboard</h1>
+
       <Row gutter={[16, 16]}>
         {/* Quick Access Cards */}
         <Col xs={24} md={6}>
@@ -23,7 +23,7 @@ const AdminDashboard = () => {
                 title="Manage Users"
                 prefix={<UserOutlined />}
                 value="Users"
-                valueStyle={{ color: '#1890ff' }}
+                valueStyle={{ color: "#1890ff" }}
               />
             </Card>
           </Link>
@@ -35,7 +35,7 @@ const AdminDashboard = () => {
                 title="Manage Tasks"
                 prefix={<ProjectOutlined />}
                 value="Tasks"
-                valueStyle={{ color: '#52c41a' }}
+                valueStyle={{ color: "#52c41a" }}
               />
             </Card>
           </Link>
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
                 title="View Reports"
                 prefix={<FileExcelOutlined />}
                 value="Reports"
-                valueStyle={{ color: '#722ed1' }}
+                valueStyle={{ color: "#722ed1" }}
               />
             </Card>
           </Link>
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
                 title="Pending Tasks"
                 prefix={<ClockCircleOutlined />}
                 value="View"
-                valueStyle={{ color: '#fa8c16' }}
+                valueStyle={{ color: "#fa8c16" }}
               />
             </Card>
           </Link>

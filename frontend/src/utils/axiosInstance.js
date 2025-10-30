@@ -28,8 +28,10 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
+      // Clear authentication data
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+      // Redirect to login
       window.location.href = '/login';
     }
     return Promise.reject(error);

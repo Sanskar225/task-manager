@@ -1,37 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Card, Typography } from "antd";
+
+const { Title } = Typography;
 
 const AuthLayout = ({ children, title }) => {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {title}
-          </h2>
-        </div>
+    <div style={{ 
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '24px',
+      background: '#f0f2f5'
+    }}>
+      <Card style={{ 
+        width: '100%',
+        maxWidth: 400,
+        borderRadius: 8,
+        boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+      }}>
+        <Title level={2} style={{ textAlign: 'center', marginBottom: 32 }}>
+          {title}
+        </Title>
         {children}
-        <div className="text-center mt-4">
-          {title.toLowerCase().includes("login") ? (
-            <p>
-              Don't have an account?{" "}
-              <Link
-                to="/register"
-                className="text-blue-600 hover:text-blue-800"
-              >
-                Register here
-              </Link>
-            </p>
-          ) : (
-            <p>
-              Already have an account?{" "}
-              <Link to="/login" className="text-blue-600 hover:text-blue-800">
-                Login here
-              </Link>
-            </p>
-          )}
-        </div>
-      </div>
+      </Card>
     </div>
   );
 };

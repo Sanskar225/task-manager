@@ -1,31 +1,28 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Form, Input, Button, message, Typography } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import AuthLayout from "../../components/layouts/authLayout";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 
+const { Text } = Typography;
+
 const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (values) => {
     setError("");
     setLoading(true);
 
     try {
-      const response = await axiosInstance.post(API_PATHS.LOGIN, formData);
+      const response = await axiosInstance.post(API_PATHS.LOGIN, values);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      message.success("Login successful!");
 
       // Redirect based on user role
       if (response.data.user.role === "admin") {
@@ -35,6 +32,7 @@ const Login = () => {
       }
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred during login");
+      message.error("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }
@@ -42,12 +40,75 @@ const Login = () => {
 
   return (
     <AuthLayout title="Login to Task Manager">
-      <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+      <Form
+        name="login"
+        className="login-form"
+        onFinish={handleSubmit}
+        layout="vertical"
+        size="large"
+      >
         {error && (
-          <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {error}
-          </div>
+          <Form.Item>
+            <Text type="danger">{error}</Text>
+          </Form.Item>
         )}
+        
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your email!',
+            },
+            {
+              type: 'email',
+              message: 'Please enter a valid email!',
+            },
+          ]}
+        >
+          <Input
+            prefix={<UserOutlined />}
+            placeholder="Email"
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="password"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your password!',
+            },
+          ]}
+        >
+          <Input.Password
+            prefix={<LockOutlined />}
+            placeholder="Password"
+          />
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            loading={loading}
+          >
+            Log in
+          </Button>
+        </Form.Item>
+
+        <Form.Item>
+          <Text>
+            Don't have an account? <Link to="/signup">Sign up</Link>
+          </Text>
+        </Form.Item>
+      </Form>
+    </AuthLayout>
+  );
+};
+
+export default Login;
         <div className="rounded-md shadow-sm -space-y-px">
           <div>
             <label htmlFor="email" className="sr-only">
