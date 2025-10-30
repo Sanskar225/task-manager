@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  Table, 
-  Tag, 
-  Space, 
-  Button, 
-  Popconfirm, 
-  message, 
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  Tag,
+  Space,
+  Button,
+  Popconfirm,
+  message,
   Card,
   Progress,
-  Select
-} from 'antd';
-import { 
-  EditOutlined, 
-  DeleteOutlined, 
+  Select,
+} from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
   PlusOutlined,
   CheckCircleOutlined,
   ClockCircleOutlined,
-  ExclamationCircleOutlined
-} from '@ant-design/icons';
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
-import moment from 'moment';
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
+import moment from "moment";
 
 const { Option } = Select;
 
 const statusColors = {
-  pending: '#faad14',
-  'in-progress': '#1890ff',
-  completed: '#52c41a'
+  pending: "#faad14",
+  "in-progress": "#1890ff",
+  completed: "#52c41a",
 };
 
 const priorityColors = {
-  low: 'blue',
-  medium: 'orange',
-  high: 'red'
+  low: "blue",
+  medium: "orange",
+  high: "red",
 };
 
 const ManageTasks = () => {
   const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState("all");
 
   useEffect(() => {
     fetchTasks();
@@ -53,7 +53,7 @@ const ManageTasks = () => {
       const response = await axiosInstance.get(API_PATHS.TASKS);
       setTasks(response.data);
     } catch (error) {
-      message.error('Failed to fetch tasks');
+      message.error("Failed to fetch tasks");
     } finally {
       setLoading(false);
     }
@@ -62,45 +62,46 @@ const ManageTasks = () => {
   const handleDelete = async (id) => {
     try {
       await axiosInstance.delete(API_PATHS.TASK_BY_ID(id));
-      message.success('Task deleted successfully');
+      message.success("Task deleted successfully");
       fetchTasks();
     } catch (error) {
-      message.error('Failed to delete task');
+      message.error("Failed to delete task");
     }
   };
 
   const handleStatusChange = async (id, status) => {
     try {
       await axiosInstance.patch(API_PATHS.UPDATE_TASK_STATUS(id), { status });
-      message.success('Task status updated successfully');
+      message.success("Task status updated successfully");
       fetchTasks();
     } catch (error) {
-      message.error('Failed to update task status');
+      message.error("Failed to update task status");
     }
   };
 
-  const filteredTasks = statusFilter === 'all' 
-    ? tasks 
-    : tasks.filter(task => task.status === statusFilter);
+  const filteredTasks =
+    statusFilter === "all"
+      ? tasks
+      : tasks.filter((task) => task.status === statusFilter);
 
   const columns = [
     {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
       width: 200,
       ellipsis: true,
     },
     {
-      title: 'Assigned To',
-      dataIndex: 'assignedTo',
-      key: 'assignedTo',
-      render: (assignedTo) => assignedTo?.name || 'Unassigned',
+      title: "Assigned To",
+      dataIndex: "assignedTo",
+      key: "assignedTo",
+      render: (assignedTo) => assignedTo?.name || "Unassigned",
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
       render: (status, record) => (
         <Select
           value={status}
@@ -120,36 +121,37 @@ const ManageTasks = () => {
       ),
     },
     {
-      title: 'Priority',
-      dataIndex: 'priority',
-      key: 'priority',
+      title: "Priority",
+      dataIndex: "priority",
+      key: "priority",
       render: (priority) => (
-        <Tag color={priorityColors[priority]} style={{ textTransform: 'capitalize' }}>
+        <Tag
+          color={priorityColors[priority]}
+          style={{ textTransform: "capitalize" }}
+        >
           {priority}
         </Tag>
       ),
     },
     {
-      title: 'Progress',
-      dataIndex: 'progress',
-      key: 'progress',
-      render: (progress) => (
-        <Progress percent={progress} size="small" />
-      ),
+      title: "Progress",
+      dataIndex: "progress",
+      key: "progress",
+      render: (progress) => <Progress percent={progress} size="small" />,
     },
     {
-      title: 'Due Date',
-      dataIndex: 'dueDate',
-      key: 'dueDate',
-      render: (date) => moment(date).format('MMM DD, YYYY'),
+      title: "Due Date",
+      dataIndex: "dueDate",
+      key: "dueDate",
+      render: (date) => moment(date).format("MMM DD, YYYY"),
     },
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       render: (_, record) => (
         <Space>
-          <Button 
-            type="primary" 
+          <Button
+            type="primary"
             icon={<EditOutlined />}
             onClick={() => navigate(`/admin/tasks/${record._id}/edit`)}
           >
@@ -171,12 +173,12 @@ const ManageTasks = () => {
   ];
 
   return (
-    <div style={{ padding: '24px' }}>
+    <div style={{ padding: "24px" }}>
       <Card
         title="Manage Tasks"
         extra={
           <Space>
-            <Select 
+            <Select
               value={statusFilter}
               onChange={setStatusFilter}
               style={{ width: 150 }}
@@ -186,17 +188,17 @@ const ManageTasks = () => {
               <Option value="in-progress">In Progress</Option>
               <Option value="completed">Completed</Option>
             </Select>
-            <Button 
-              type="primary" 
+            <Button
+              type="primary"
               icon={<PlusOutlined />}
-              onClick={() => navigate('/admin/create-task')}
+              onClick={() => navigate("/admin/create-task")}
             >
               Create Task
             </Button>
           </Space>
         }
       >
-        <Table 
+        <Table
           columns={columns}
           dataSource={filteredTasks}
           rowKey="_id"
@@ -204,7 +206,7 @@ const ManageTasks = () => {
           pagination={{
             pageSize: 10,
             showSizeChanger: true,
-            showTotal: (total) => `Total ${total} tasks`
+            showTotal: (total) => `Total ${total} tasks`,
           }}
         />
       </Card>

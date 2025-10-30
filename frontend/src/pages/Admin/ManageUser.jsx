@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Table,
   Card,
@@ -10,18 +10,18 @@ import {
   Modal,
   Form,
   Input,
-  Select
-} from 'antd';
+  Select,
+} from "antd";
 import {
   UserAddOutlined,
   EditOutlined,
   DeleteOutlined,
   UserOutlined,
   MailOutlined,
-  LockOutlined
-} from '@ant-design/icons';
-import axiosInstance from '../../utils/axiosInstance';
-import { API_PATHS } from '../../utils/apiPaths';
+  LockOutlined,
+} from "@ant-design/icons";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
 
 const { Option } = Select;
 
@@ -42,7 +42,7 @@ const ManageUser = () => {
       const response = await axiosInstance.get(API_PATHS.USERS);
       setUsers(response.data);
     } catch (error) {
-      message.error('Failed to fetch users');
+      message.error("Failed to fetch users");
     } finally {
       setLoading(false);
     }
@@ -51,10 +51,10 @@ const ManageUser = () => {
   const handleDelete = async (userId) => {
     try {
       await axiosInstance.delete(API_PATHS.USER_BY_ID(userId));
-      message.success('User deleted successfully');
+      message.success("User deleted successfully");
       fetchUsers();
     } catch (error) {
-      message.error('Failed to delete user');
+      message.error("Failed to delete user");
     }
   };
 
@@ -86,42 +86,42 @@ const ManageUser = () => {
     try {
       if (editingUser) {
         await axiosInstance.put(API_PATHS.USER_BY_ID(editingUser._id), values);
-        message.success('User updated successfully');
+        message.success("User updated successfully");
       } else {
         await axiosInstance.post(API_PATHS.USERS, values);
-        message.success('User created successfully');
+        message.success("User created successfully");
       }
       handleModalCancel();
       fetchUsers();
     } catch (error) {
-      message.error(error.response?.data?.message || 'Operation failed');
+      message.error(error.response?.data?.message || "Operation failed");
     }
   };
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Role',
-      dataIndex: 'role',
-      key: 'role',
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
       render: (role) => (
-        <Tag color={role === 'admin' ? 'red' : 'blue'}>
+        <Tag color={role === "admin" ? "red" : "blue"}>
           {role.toUpperCase()}
         </Tag>
       ),
     },
     {
-      title: 'Actions',
-      key: 'actions',
+      title: "Actions",
+      key: "actions",
       render: (_, record) => (
         <Space>
           <Button
@@ -147,7 +147,7 @@ const ManageUser = () => {
   ];
 
   return (
-    <div style={{ padding: '24px' }}>
+    <div style={{ padding: "24px" }}>
       <Card
         title="Manage Users"
         extra={
@@ -169,22 +169,22 @@ const ManageUser = () => {
       </Card>
 
       <Modal
-        title={editingUser ? 'Edit User' : 'Add User'}
+        title={editingUser ? "Edit User" : "Add User"}
         open={modalVisible}
         onOk={handleModalOk}
         onCancel={handleModalCancel}
-        okText={editingUser ? 'Update' : 'Create'}
+        okText={editingUser ? "Update" : "Create"}
       >
         <Form
           form={form}
           layout="vertical"
           onFinish={onFinish}
-          initialValues={{ role: 'member' }}
+          initialValues={{ role: "member" }}
         >
           <Form.Item
             name="name"
             label="Name"
-            rules={[{ required: true, message: 'Please enter name' }]}
+            rules={[{ required: true, message: "Please enter name" }]}
           >
             <Input prefix={<UserOutlined />} placeholder="Enter name" />
           </Form.Item>
@@ -193,8 +193,8 @@ const ManageUser = () => {
             name="email"
             label="Email"
             rules={[
-              { required: true, message: 'Please enter email' },
-              { type: 'email', message: 'Please enter a valid email' }
+              { required: true, message: "Please enter email" },
+              { type: "email", message: "Please enter a valid email" },
             ]}
           >
             <Input prefix={<MailOutlined />} placeholder="Enter email" />
@@ -205,8 +205,8 @@ const ManageUser = () => {
               name="password"
               label="Password"
               rules={[
-                { required: true, message: 'Please enter password' },
-                { min: 6, message: 'Password must be at least 6 characters' }
+                { required: true, message: "Please enter password" },
+                { min: 6, message: "Password must be at least 6 characters" },
               ]}
             >
               <Input.Password
@@ -219,7 +219,7 @@ const ManageUser = () => {
           <Form.Item
             name="role"
             label="Role"
-            rules={[{ required: true, message: 'Please select role' }]}
+            rules={[{ required: true, message: "Please select role" }]}
           >
             <Select>
               <Option value="member">Member</Option>
