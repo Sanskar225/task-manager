@@ -1,7 +1,12 @@
-const exppress = require("express");
-const {adminOnly} = require("../middleware/authMiddleware");
+const express = require("express");
+const { protect, adminOnly } = require("../middlewares/authMiddleware");
 const { getUsers, getUserById, deleteUser } = require("../controllers/userController");
-const router = exppress.Router();
-router.get("/",protect,adminOnly, getUsers);
-router.get(":id",protect,getUserById);
-module.exports=router;
+
+const router = express.Router();
+
+// User management routes (admin only)
+router.get("/", protect, adminOnly, getUsers);
+router.get("/:id", protect, getUserById);
+router.delete("/:id", protect, adminOnly, deleteUser);
+
+module.exports = router;

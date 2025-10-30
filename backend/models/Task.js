@@ -16,4 +16,4 @@ const taskSchema = new mongoose.Schema({
     progress:{type:Number,default:0},
 },{timestamps:true}
 );
-modeule.exports =mongoose.model("Task",taskSchema);
+module.exports = mongoose.model("Task", taskSchema);

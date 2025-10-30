@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
     {
-        name:{type:String,required:true},
-        email:{type:String,required:true,unique:true},
-        password :{tpe:String,required:true, unique:true},
-        profileImageUrl:{type:String,enum:["admin","member"],default:"member"},
-
+        name: { type: String, required: true },
+        email: { type: String, required: true, unique: true },
+        password: { type: String, required: true },
+        role: { type: String, enum: ["admin", "member"], default: "member" },
+        profileImageUrl: { type: String },
+        status: { type: String, enum: ["active", "inactive"], default: "active" }
     },
-    {timestamps:true}
+    { timestamps: true }
 );
  module.exports=mongoose.model("User",UserSchema);
